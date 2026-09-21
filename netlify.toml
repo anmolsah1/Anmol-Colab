@@ -4,7 +4,7 @@
   publish = "dist"
 
 [build.environment]
-  VITE_API_URL = "https://srv-daodhgo473hc739trl00.onrender.com"
+  VITE_API_URL = "https://anmol-colab.onrender.com"
 
 [[redirects]]
   from   = "/*"

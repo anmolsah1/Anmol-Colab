@@ -45,6 +45,7 @@ def field_names(connection):
 # ── CORS ─────────────────────────────────────────────────────────────────────
 ALLOWED_ORIGINS = {
     "https://collegesearchproject.netlify.app",
+    "https://anmol-colab.onrender.com",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 }
