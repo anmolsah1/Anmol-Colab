@@ -43,9 +43,19 @@ def field_names(connection):
 
 
 # ── CORS ─────────────────────────────────────────────────────────────────────
+ALLOWED_ORIGINS = {
+    "https://collegesearchproject.netlify.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+}
+
 @app.after_request
 def allow_frontend(response):
-    response.headers["Access-Control-Allow-Origin"]  = "*"
+    origin = request.headers.get("Origin", "")
+    if origin in ALLOWED_ORIGINS:
+        response.headers["Access-Control-Allow-Origin"]  = origin
+    else:
+        response.headers["Access-Control-Allow-Origin"]  = "https://collegesearchproject.netlify.app"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
     return response

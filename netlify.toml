@@ -1,7 +1,10 @@
 [build]
   base    = "frontend"
   command = "npm run build"
-  publish = "frontend/dist"
+  publish = "dist"
+
+[build.environment]
+  VITE_API_URL = "https://srv-daodhgo473hc739trl00.onrender.com"
 
 [[redirects]]
   from   = "/*"
