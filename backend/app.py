@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 import sqlite3
 import os
 import re
+import sys
+import subprocess
+import tempfile
 
 app = Flask(__name__)
 
@@ -176,6 +179,46 @@ def search_practical():
         {"practical_number": r["practical_number"], "topic": r["topic"], "code": r["code"]}
         for r in results
     ])
+
+
+# ── RUN CODE ─────────────────────────────────────────────────────────────────
+@app.route("/run", methods=["POST"])
+def run_code():
+    data = request.json or {}
+    code = data.get("code", "").strip()
+
+    if not code:
+        return jsonify({"output": "", "error": None})
+
+    tmp_path = None
+    try:
+        # Write code to a temp file — handles multi-line, quotes, indentation
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False, encoding="utf-8"
+        ) as f:
+            f.write(code)
+            tmp_path = f.name
+
+        result = subprocess.run(
+            [sys.executable, tmp_path],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+
+        return jsonify({
+            "output":     result.stdout,
+            "error":      result.stderr if result.returncode != 0 else None,
+            "returncode": result.returncode,
+        })
+
+    except subprocess.TimeoutExpired:
+        return jsonify({"output": "", "error": "TimeoutError: execution exceeded 10 seconds.", "returncode": 1})
+    except Exception as exc:
+        return jsonify({"output": "", "error": f"ServerError: {exc}", "returncode": 1})
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
 
 
 if __name__ == "__main__":

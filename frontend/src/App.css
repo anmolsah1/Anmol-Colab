@@ -1,11 +1,19 @@
 /* ============================================================
    RESET & BASE
    ============================================================ */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html, body, #root {
-  width: 100%; height: 100%;
-  margin: 0; padding: 0;
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -16,7 +24,9 @@ body {
   background: #fff;
 }
 
-button { cursor: pointer; }
+button {
+  cursor: pointer;
+}
 
 /* ============================================================
    ROOT SHELL
@@ -39,7 +49,7 @@ button { cursor: pointer; }
   align-items: center;
   gap: 0;
   padding: 0 6px;
-  background: #1e1e1e;
+  background: #ffffff;
   color: #d4d4d4;
   font-size: 13px;
   user-select: none;
@@ -56,11 +66,12 @@ button { cursor: pointer; }
   padding: 0 8px;
   height: 26px;
   line-height: 26px;
-  color: #d4d4d4;
+  color: #332626;
   border-radius: 2px;
 }
+
 .jlab-menu-item:hover {
-  background: #3c3c3c;
+  background: #f5f3f3d2;
   cursor: pointer;
 }
 
@@ -84,7 +95,7 @@ button { cursor: pointer; }
   align-items: center;
   padding-top: 4px;
   gap: 2px;
-  background: #2b2b2b;
+  background: #eee9e9be;
   /* No right border — separator is owned by the panel's left edge */
 }
 
@@ -101,9 +112,14 @@ button { cursor: pointer; }
   font-size: 16px;
   transition: background 0.1s, color 0.1s;
 }
-.jlab-act-btn:hover { background: #3c3c3c; color: #fff; }
+
+.jlab-act-btn:hover {
+  background: #adacac;
+  color: #fff;
+}
+
 .jlab-act-btn.jlab-act-active {
-  background: #3c3c3c;
+  background: #fdfbfb;
   color: #fff;
   border-left: 2px solid #f37626;
 }
@@ -117,8 +133,10 @@ button { cursor: pointer; }
   display: flex;
   flex-direction: column;
   background: #f8f8f8;
-  border-left: 2px solid #d0d0d0;   /* light grey left separator */
-  border-right: 1px solid #d0d0d0; /* light grey right separator */
+  border-left: 2px solid #d0d0d0;
+  /* light grey left separator */
+  border-right: 1px solid #d0d0d0;
+  /* light grey right separator */
   overflow: hidden;
 }
 
@@ -135,7 +153,10 @@ button { cursor: pointer; }
   border-bottom: 1px solid #e8e8e8;
   gap: 6px;
 }
-.jlab-panel-path > span { flex: 1; }
+
+.jlab-panel-path>span {
+  flex: 1;
+}
 
 /* Blue + New button in panel header */
 .jlab-panel-new {
@@ -150,12 +171,16 @@ button { cursor: pointer; }
   cursor: pointer;
   white-space: nowrap;
 }
-.jlab-panel-new:hover { background: #1565c0; }
+
+.jlab-panel-new:hover {
+  background: #1565c0;
+}
 
 .jlab-panel-btns {
   display: flex;
   gap: 1px;
 }
+
 .jlab-panel-btns button {
   width: 24px;
   height: 24px;
@@ -168,7 +193,11 @@ button { cursor: pointer; }
   align-items: center;
   justify-content: center;
 }
-.jlab-panel-btns button:hover { background: #e0e0e0; color: #222; }
+
+.jlab-panel-btns button:hover {
+  background: #e0e0e0;
+  color: #222;
+}
 
 /* Column header: Name | Modified */
 .jlab-file-header {
@@ -182,8 +211,15 @@ button { cursor: pointer; }
   font-weight: 600;
   color: #666;
 }
-.jlab-fh-name { flex: 1; }
-.jlab-fh-mod  { width: 58px; text-align: right; }
+
+.jlab-fh-name {
+  flex: 1;
+}
+
+.jlab-fh-mod {
+  width: 58px;
+  text-align: right;
+}
 
 /* File rows */
 .jlab-files {
@@ -203,15 +239,33 @@ button { cursor: pointer; }
   cursor: pointer;
   border-left: 2px solid transparent;
 }
-.jlab-file-row:hover { background: #e8e8e8; }
+
+.jlab-file-row:hover {
+  background: #e8e8e8;
+}
+
 .jlab-file-row.active {
   background: #d6eaff;
   border-left-color: #1976d2;
 }
 
-.jlab-nb-icon { color: #f37626; font-size: 13px; }
-.jlab-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.jlab-file-mod  { font-size: 11px; color: #888; white-space: nowrap; }
+.jlab-nb-icon {
+  color: #f37626;
+  font-size: 13px;
+}
+
+.jlab-file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jlab-file-mod {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+}
 
 /* ============================================================
    MAIN  (tabs + notebook content)
@@ -232,7 +286,7 @@ button { cursor: pointer; }
   min-height: 30px;
   display: flex;
   align-items: flex-end;
-  background: #eeeeee;
+  background: #bebcbc;
   border-bottom: 1px solid #e0e0e0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -253,16 +307,32 @@ button { cursor: pointer; }
   white-space: nowrap;
   user-select: none;
 }
-.jlab-tab:hover { background: #d8d8d8; }
+
+.jlab-tab:hover {
+  background: #d8d8d8;
+}
+
 .jlab-tab.active {
   background: #ffffff;
   border-top-color: #1976d2;
   color: #111;
 }
 
-.jlab-tab-icon  { color: #f37626; font-size: 12px; }
-.jlab-tab-label { font-size: 12px; }
-.jlab-tab-dot   { font-size: 7px; color: #999; margin-left: 2px; }
+.jlab-tab-icon {
+  color: #f37626;
+  font-size: 12px;
+}
+
+.jlab-tab-label {
+  font-size: 12px;
+}
+
+.jlab-tab-dot {
+  font-size: 7px;
+  color: #999;
+  margin-left: 2px;
+}
+
 .jlab-tab-close {
   font-size: 14px;
   color: #888;
@@ -270,7 +340,11 @@ button { cursor: pointer; }
   border-radius: 2px;
   line-height: 1;
 }
-.jlab-tab-close:hover { background: #ddd; color: #333; }
+
+.jlab-tab-close:hover {
+  background: #ddd;
+  color: #333;
+}
 
 /* ============================================================
    NOTEBOOK AREA
@@ -309,8 +383,15 @@ button { cursor: pointer; }
   color: #444;
   transition: background 0.1s;
 }
-.jlab-tb-btn:hover { background: #e0e0e0; }
-.jlab-run { color: #1976d2 !important; font-size: 13px !important; }
+
+.jlab-tb-btn:hover {
+  background: #e0e0e0;
+}
+
+.jlab-run {
+  color: #1976d2 !important;
+  font-size: 13px !important;
+}
 
 .jlab-tb-sep {
   width: 1px;
@@ -330,7 +411,9 @@ button { cursor: pointer; }
   cursor: pointer;
 }
 
-.jlab-tb-spacer { flex: 1; }
+.jlab-tb-spacer {
+  flex: 1;
+}
 
 .jlab-kernel-name {
   font-size: 11px;
@@ -347,6 +430,7 @@ button { cursor: pointer; }
   background: transparent;
   margin-right: 4px;
 }
+
 .jlab-kernel-circle.busy {
   background: #f37626;
   border-color: #f37626;
@@ -386,6 +470,7 @@ button { cursor: pointer; }
   padding: 4px 4px 0 4px;
   flex-shrink: 0;
 }
+
 .jlab-cell-toolbar button {
   width: 22px;
   height: 22px;
@@ -399,7 +484,12 @@ button { cursor: pointer; }
   justify-content: center;
   cursor: pointer;
 }
-.jlab-cell-toolbar button:hover { background: #eee; border-color: #ddd; color: #222; }
+
+.jlab-cell-toolbar button:hover {
+  background: #eee;
+  border-color: #ddd;
+  color: #222;
+}
 
 /* Input cell row — toolbar is a flex child on the right */
 .jlab-cell {
@@ -408,7 +498,10 @@ button { cursor: pointer; }
   border-left: 4px solid transparent;
   padding-right: 0;
 }
-.jlab-cell.selected { border-left-color: #1976d2; }
+
+.jlab-cell.selected {
+  border-left-color: #1976d2;
+}
 
 .jlab-in-prompt {
   width: 58px;
@@ -431,10 +524,13 @@ button { cursor: pointer; }
 .jlab-textarea {
   width: 100%;
   min-height: 30px;
-  height: 30px;          /* JS will override this on each keystroke */
+  height: 30px;
+  /* JS will override this on each keystroke */
   padding: 5px 8px;
-  resize: none;          /* no manual resize — grows automatically */
-  overflow: hidden;      /* hides scrollbar while auto-sizing */
+  resize: none;
+  /* no manual resize — grows automatically */
+  overflow: hidden;
+  /* hides scrollbar while auto-sizing */
   outline: none;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
@@ -446,7 +542,10 @@ button { cursor: pointer; }
   transition: border-color 0.15s;
   box-sizing: border-box;
 }
-.jlab-textarea:focus { border-color: #1976d2; }
+
+.jlab-textarea:focus {
+  border-color: #1976d2;
+}
 
 /* ============================================================
    OUTPUT ROW
@@ -497,7 +596,12 @@ button { cursor: pointer; }
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Error */
 .jlab-error {
@@ -518,11 +622,19 @@ button { cursor: pointer; }
   font-size: 13px;
   padding: 4px 0;
 }
-.jlab-no-results strong { color: #555; }
+
+.jlab-no-results strong {
+  color: #555;
+}
 
 /* Result card */
-.jlab-result { padding: 8px 0; }
-.jlab-result + .jlab-result { border-top: 1px solid #ebebeb; }
+.jlab-result {
+  padding: 8px 0;
+}
+
+.jlab-result+.jlab-result {
+  border-top: 1px solid #ebebeb;
+}
 
 /* Topic heading row: "# topic text" */
 .jlab-result-heading {
@@ -535,7 +647,8 @@ button { cursor: pointer; }
 .jlab-hash {
   font-size: 16px;
   font-weight: 700;
-  color: #aaa;          /* grey # like Jupyter markdown heading */
+  color: #aaa;
+  /* grey # like Jupyter markdown heading */
   line-height: 1;
   flex-shrink: 0;
 }
@@ -592,7 +705,10 @@ button { cursor: pointer; }
   font-weight: 700 !important;
   white-space: nowrap;
 }
-.jlab-add-btn:hover { background: #1b5e20 !important; }
+
+.jlab-add-btn:hover {
+  background: #1b5e20 !important;
+}
 
 /* ============================================================
    ADD-PRACTICAL MODAL
@@ -600,7 +716,7 @@ button { cursor: pointer; }
 .add-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -612,7 +728,7 @@ button { cursor: pointer; }
   max-width: 95vw;
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -642,7 +758,10 @@ button { cursor: pointer; }
   line-height: 1;
   padding: 0 2px;
 }
-.add-modal-close:hover { color: #fff; }
+
+.add-modal-close:hover {
+  color: #fff;
+}
 
 .add-modal-body {
   display: flex;
@@ -671,7 +790,10 @@ button { cursor: pointer; }
   outline: none;
   transition: border-color 0.15s;
 }
-.add-input:focus { border-color: #1976d2; }
+
+.add-input:focus {
+  border-color: #1976d2;
+}
 
 .add-textarea {
   padding: 8px 10px;
@@ -685,7 +807,10 @@ button { cursor: pointer; }
   line-height: 1.5;
   transition: border-color 0.15s;
 }
-.add-textarea:focus { border-color: #1976d2; }
+
+.add-textarea:focus {
+  border-color: #1976d2;
+}
 
 .add-msg {
   padding: 8px 12px;
@@ -693,8 +818,18 @@ button { cursor: pointer; }
   font-size: 13px;
   font-weight: 600;
 }
-.add-msg-ok  { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-.add-msg-err { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+
+.add-msg-ok {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.add-msg-err {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
 
 .add-modal-footer {
   display: flex;
@@ -715,7 +850,10 @@ button { cursor: pointer; }
   cursor: pointer;
   color: #555;
 }
-.add-btn-cancel:hover { background: #f5f5f5; }
+
+.add-btn-cancel:hover {
+  background: #f5f5f5;
+}
 
 .add-btn-save {
   height: 32px;
@@ -729,8 +867,15 @@ button { cursor: pointer; }
   cursor: pointer;
   transition: background 0.15s;
 }
-.add-btn-save:hover    { background: #1b5e20; }
-.add-btn-save:disabled { background: #999; cursor: default; }
+
+.add-btn-save:hover {
+  background: #1b5e20;
+}
+
+.add-btn-save:disabled {
+  background: #999;
+  cursor: default;
+}
 
 /* ============================================================
    DB MANAGER MODAL
@@ -741,7 +886,7 @@ button { cursor: pointer; }
   max-height: 90vh;
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.30);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.30);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -756,6 +901,7 @@ button { cursor: pointer; }
   border-bottom: 1px solid #e8e8e8;
   background: #fafafa;
 }
+
 .dbm-add-btn {
   height: 30px;
   padding: 0 14px;
@@ -767,7 +913,11 @@ button { cursor: pointer; }
   font-weight: 600;
   cursor: pointer;
 }
-.dbm-add-btn:hover { background: #1565c0; }
+
+.dbm-add-btn:hover {
+  background: #1565c0;
+}
+
 .dbm-refresh-btn {
   height: 30px;
   padding: 0 12px;
@@ -778,10 +928,23 @@ button { cursor: pointer; }
   cursor: pointer;
   color: #555;
 }
-.dbm-refresh-btn:hover { background: #f5f5f5; }
-.dbm-inline-msg { font-size: 12px; font-weight: 600; }
-.dbm-inline-msg.ok  { color: #2e7d32; }
-.dbm-inline-msg.err { color: #c62828; }
+
+.dbm-refresh-btn:hover {
+  background: #f5f5f5;
+}
+
+.dbm-inline-msg {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dbm-inline-msg.ok {
+  color: #2e7d32;
+}
+
+.dbm-inline-msg.err {
+  color: #c62828;
+}
 
 /* add / edit form */
 .dbm-form {
@@ -792,15 +955,18 @@ button { cursor: pointer; }
   border-bottom: 2px solid #1976d2;
   background: #f0f7ff;
 }
+
 .dbm-form-title {
   font-size: 13px;
   font-weight: 700;
   color: #1976d2;
 }
+
 .dbm-form-row {
   display: flex;
   gap: 12px;
 }
+
 .dbm-form-actions {
   display: flex;
   justify-content: flex-end;
@@ -812,17 +978,20 @@ button { cursor: pointer; }
   flex: 1;
   overflow-y: auto;
 }
+
 .dbm-empty {
   padding: 40px;
   text-align: center;
   color: #888;
   font-size: 14px;
 }
+
 .dbm-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
+
 .dbm-table thead th {
   position: sticky;
   top: 0;
@@ -833,16 +1002,28 @@ button { cursor: pointer; }
   font-weight: 600;
   color: #333;
 }
+
 .dbm-table tbody tr {
   border-bottom: 1px solid #eee;
 }
-.dbm-table tbody tr:hover { background: #f5f5f5; }
-.dbm-table tbody tr.dbm-editing { background: #fff8e1; }
+
+.dbm-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.dbm-table tbody tr.dbm-editing {
+  background: #fff8e1;
+}
+
 .dbm-table td {
   padding: 7px 10px;
   vertical-align: middle;
 }
-.dbm-td-center { text-align: center; }
+
+.dbm-td-center {
+  text-align: center;
+}
+
 .dbm-code-preview {
   font-family: "Consolas", monospace;
   font-size: 11px;
@@ -852,6 +1033,7 @@ button { cursor: pointer; }
   text-overflow: ellipsis;
   max-width: 300px;
 }
+
 .dbm-edit-btn {
   background: none;
   border: none;
@@ -861,7 +1043,11 @@ button { cursor: pointer; }
   border-radius: 3px;
   transition: background 0.1s;
 }
-.dbm-edit-btn:hover { background: #e3f2fd; }
+
+.dbm-edit-btn:hover {
+  background: #e3f2fd;
+}
+
 .dbm-del-btn {
   background: none;
   border: none;
@@ -871,13 +1057,28 @@ button { cursor: pointer; }
   border-radius: 3px;
   transition: background 0.1s;
 }
-.dbm-del-btn:hover { background: #ffebee; }
+
+.dbm-del-btn:hover {
+  background: #ffebee;
+}
 
 
-.jlab-st { white-space: nowrap; }
-.jlab-st-bell { font-size: 12px; }
-.jlab-st-spacer { flex: 1; }
-.jlab-st-sep { color: #555; margin: 0 2px; }
+.jlab-st {
+  white-space: nowrap;
+}
+
+.jlab-st-bell {
+  font-size: 12px;
+}
+
+.jlab-st-spacer {
+  flex: 1;
+}
+
+.jlab-st-sep {
+  color: #555;
+  margin: 0 2px;
+}
 
 /* small kernel circle in status bar */
 .jlab-st-kernel-dot {
@@ -893,17 +1094,36 @@ button { cursor: pointer; }
 /* ============================================================
    SCROLLBAR STYLING
    ============================================================ */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #f5f5f5; }
-::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #999; }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
 
 /* ============================================================
    RESPONSIVE — hide panel on small screens
    ============================================================ */
 @media (max-width: 700px) {
-  .jlab-panel { display: none; }
-  .jlab-activity { width: 32px; min-width: 32px; }
+  .jlab-panel {
+    display: none;
+  }
+
+  .jlab-activity {
+    width: 32px;
+    min-width: 32px;
+  }
 }
 
 /* ============================================================
@@ -919,7 +1139,10 @@ button { cursor: pointer; }
   font-weight: 700 !important;
   white-space: nowrap;
 }
-.jlab-add-btn:hover { background: #1b5e20 !important; }
+
+.jlab-add-btn:hover {
+  background: #1b5e20 !important;
+}
 
 /* ============================================================
    ADD-PRACTICAL MODAL
@@ -927,7 +1150,7 @@ button { cursor: pointer; }
 .add-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -939,7 +1162,7 @@ button { cursor: pointer; }
   max-width: 95vw;
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -967,7 +1190,10 @@ button { cursor: pointer; }
   cursor: pointer;
   line-height: 1;
 }
-.add-modal-close:hover { color: #fff; }
+
+.add-modal-close:hover {
+  color: #fff;
+}
 
 .add-modal-body {
   display: flex;
@@ -995,7 +1221,10 @@ button { cursor: pointer; }
   color: #111;
   outline: none;
 }
-.add-input:focus { border-color: #1976d2; }
+
+.add-input:focus {
+  border-color: #1976d2;
+}
 
 .add-textarea {
   padding: 8px 10px;
@@ -1008,7 +1237,10 @@ button { cursor: pointer; }
   outline: none;
   line-height: 1.5;
 }
-.add-textarea:focus { border-color: #1976d2; }
+
+.add-textarea:focus {
+  border-color: #1976d2;
+}
 
 .add-msg {
   padding: 8px 12px;
@@ -1016,8 +1248,18 @@ button { cursor: pointer; }
   font-size: 13px;
   font-weight: 600;
 }
-.add-msg-ok  { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-.add-msg-err { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+
+.add-msg-ok {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.add-msg-err {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
 
 .add-modal-footer {
   display: flex;
@@ -1038,7 +1280,10 @@ button { cursor: pointer; }
   cursor: pointer;
   color: #555;
 }
-.add-btn-cancel:hover { background: #f5f5f5; }
+
+.add-btn-cancel:hover {
+  background: #f5f5f5;
+}
 
 .add-btn-save {
   height: 32px;
@@ -1051,8 +1296,15 @@ button { cursor: pointer; }
   font-weight: 600;
   cursor: pointer;
 }
-.add-btn-save:hover    { background: #1b5e20; }
-.add-btn-save:disabled { background: #999; cursor: default; }
+
+.add-btn-save:hover {
+  background: #1b5e20;
+}
+
+.add-btn-save:disabled {
+  background: #999;
+  cursor: default;
+}
 
 
 
@@ -1756,7 +2008,9 @@ button { cursor: pointer; }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error state */
@@ -1797,7 +2051,7 @@ button { cursor: pointer; }
   padding: 12px 0;
 }
 
-.result-card + .result-card {
+.result-card+.result-card {
   border-top: 1px solid #e8e8e8;
 }
 
@@ -1952,4 +2206,327 @@ button { cursor: pointer; }
   .sidebar {
     display: none;
   }
+}
+
+/* ============================================================
+   DYNAMIC NOTEBOOK — RENAME INPUT
+   ============================================================ */
+.jlab-rename-input {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-family: inherit;
+  border: 1px solid #4d97ff;
+  border-radius: 3px;
+  padding: 1px 4px;
+  outline: none;
+  background: #fff;
+  color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(77, 151, 255, .25);
+}
+
+/* Rename input sitting inside a tab (slightly smaller) */
+.jlab-rename-tab {
+  max-width: 140px;
+  font-size: 11px;
+}
+
+/* ============================================================
+   NO OPEN TABS HINT
+   ============================================================ */
+.jlab-no-tabs {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  height: 100%;
+}
+
+/* ============================================================
+   EMPTY STATE (all tabs closed)
+   ============================================================ */
+.jlab-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #999;
+  user-select: none;
+}
+
+.jlab-empty-icon {
+  font-size: 48px;
+  opacity: .4;
+}
+
+.jlab-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+}
+
+.jlab-empty-sub {
+  font-size: 12px;
+  color: #999;
+}
+
+.jlab-empty-btn {
+  margin-top: 8px;
+  padding: 6px 16px;
+  background: #f37626;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.jlab-empty-btn:hover {
+  background: #d4651a;
+}
+
+/* ============================================================
+   MENU BAR — active notebook title (centred)
+   ============================================================ */
+.jlab-menu-nb-title {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  pointer-events: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
+}
+
+/* ============================================================
+   M+ TOOLBAR BUTTON  (add markdown cell)
+   ============================================================ */
+.jlab-md-add-btn {
+  color: #7b1fa2 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+/* ============================================================
+   FILE PANEL — delete button on row hover
+   ============================================================ */
+.jlab-file-row {
+  position: relative; /* ensure absolute child is scoped */
+}
+
+.jlab-file-del {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+  border-radius: 3px;
+  padding: 2px 4px;
+  line-height: 1;
+  color: #c62828;
+}
+.jlab-file-row:hover .jlab-file-del {
+  opacity: 1;
+}
+.jlab-file-del:hover {
+  background: #ffebee;
+}
+
+/* ============================================================
+   NO FILES IN PANEL
+   ============================================================ */
+.jlab-no-files {
+  padding: 20px 12px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   MARKDOWN CELL STYLING
+   ============================================================ */
+/* Green-tinted prompt for markdown cells */
+.md-prompt {
+  color: #7b1fa2 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+}
+
+/* Markdown textarea gets a purple left accent when active */
+.md-cell.selected {
+  border-left-color: #9c27b0 !important;
+}
+
+.jlab-md-textarea {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif !important;
+  color: #37474f !important;
+  background: #fdf8ff !important;
+}
+
+/* ============================================================
+   MARKDOWN RENDERED OUTPUT
+   ============================================================ */
+.jlab-md-output {
+  width: 100%;
+  padding: 6px 10px;
+  cursor: text;
+  min-height: 28px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+.jlab-md-output:hover {
+  background: #fafafa;
+  border-radius: 3px;
+}
+
+/* Markdown rendered elements */
+.jlab-md-output .md-h {
+  margin: 0.4em 0 0.2em;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.jlab-md-output h1.md-h { font-size: 1.6em; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+.jlab-md-output h2.md-h { font-size: 1.3em; border-bottom: 1px solid #ebebeb; padding-bottom: 2px; }
+.jlab-md-output h3.md-h { font-size: 1.1em; }
+.jlab-md-output h4.md-h,
+.jlab-md-output h5.md-h,
+.jlab-md-output h6.md-h { font-size: 1em; color: #444; }
+
+.jlab-md-output .md-p {
+  margin: 0.3em 0;
+}
+
+.jlab-md-output .md-pre {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  overflow-x: auto;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+
+.jlab-md-output .md-code {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+}
+
+.jlab-md-output .md-ic {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 11px;
+}
+
+.jlab-md-output .md-ul,
+.jlab-md-output .md-ol {
+  margin: 4px 0;
+  padding-left: 24px;
+}
+.jlab-md-output li {
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.jlab-md-output .md-bq {
+  border-left: 3px solid #9c27b0;
+  margin: 6px 0;
+  padding: 4px 12px;
+  color: #555;
+  background: #fdf8ff;
+  border-radius: 0 3px 3px 0;
+}
+
+.jlab-md-output .md-hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 10px 0;
+}
+
+.jlab-md-output a {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+.jlab-md-output strong { font-weight: 700; }
+.jlab-md-output em     { font-style: italic; }
+
+.jlab-md-output .md-empty {
+  color: #aaa;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* ============================================================
+   PYTHON CODE EXECUTION OUTPUT
+   ============================================================ */
+
+/* Wrapper for execution output */
+.jlab-exec-output {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* stdout — light green background, like Jupyter */
+.jlab-stdout {
+  margin: 0;
+  padding: 6px 10px;
+  background: #f0fff4;
+  border-left: 3px solid #38a169;
+  border-radius: 0 3px 3px 0;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #1a1a1a;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+/* stderr / traceback — red, like Jupyter */
+.jlab-stderr {
+  margin: 0;
+  padding: 6px 10px;
+  background: #fff5f5;
+  border-left: 3px solid #e53e3e;
+  border-radius: 0 3px 3px 0;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #c53030;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+/* (no output) hint */
+.jlab-exec-empty {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+  padding: 4px 0;
 }
