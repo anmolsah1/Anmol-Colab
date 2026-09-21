@@ -187,4 +187,8 @@ def run_code():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    import platform
+    # Python 3.14 + Windows has a reloader bug (WinError 10038)
+    # Disable reloader on Windows to avoid the socket error
+    use_reloader = platform.system() != "Windows"
+    app.run(debug=True, use_reloader=use_reloader)
