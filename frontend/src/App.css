@@ -1,0 +1,1955 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  margin: 0; padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+button { cursor: pointer; }
+
+/* ============================================================
+   ROOT SHELL
+   ============================================================ */
+.jlab {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* ============================================================
+   MENU BAR  (dark strip at very top)
+   ============================================================ */
+.jlab-menu {
+  height: 26px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 6px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-size: 13px;
+  user-select: none;
+}
+
+.jlab-logo {
+  font-size: 15px;
+  color: #f37626;
+  margin-right: 8px;
+  padding: 0 4px;
+}
+
+.jlab-menu-item {
+  padding: 0 8px;
+  height: 26px;
+  line-height: 26px;
+  color: #d4d4d4;
+  border-radius: 2px;
+}
+.jlab-menu-item:hover {
+  background: #3c3c3c;
+  cursor: pointer;
+}
+
+/* ============================================================
+   BODY  (activity + panel + main, fills remaining height)
+   ============================================================ */
+.jlab-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ============================================================
+   ACTIVITY BAR  (narrow left icon strip)
+   ============================================================ */
+.jlab-activity {
+  width: 40px;
+  min-width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+  gap: 2px;
+  background: #2b2b2b;
+  /* No right border — separator is owned by the panel's left edge */
+}
+
+.jlab-act-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: #a0a0a0;
+  font-size: 16px;
+  transition: background 0.1s, color 0.1s;
+}
+.jlab-act-btn:hover { background: #3c3c3c; color: #fff; }
+.jlab-act-btn.jlab-act-active {
+  background: #3c3c3c;
+  color: #fff;
+  border-left: 2px solid #f37626;
+}
+
+/* ============================================================
+   LEFT PANEL  (file browser)
+   ============================================================ */
+.jlab-panel {
+  width: 240px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+  border-left: 2px solid #d0d0d0;   /* light grey left separator */
+  border-right: 1px solid #d0d0d0; /* light grey right separator */
+  overflow: hidden;
+}
+
+/* Path row: "/ notebooks /" + action buttons */
+.jlab-panel-path {
+  height: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 1px solid #e8e8e8;
+  gap: 6px;
+}
+.jlab-panel-path > span { flex: 1; }
+
+/* Blue + New button in panel header */
+.jlab-panel-new {
+  height: 24px;
+  padding: 0 10px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.jlab-panel-new:hover { background: #1565c0; }
+
+.jlab-panel-btns {
+  display: flex;
+  gap: 1px;
+}
+.jlab-panel-btns button {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jlab-panel-btns button:hover { background: #e0e0e0; color: #222; }
+
+/* Column header: Name | Modified */
+.jlab-file-header {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+}
+.jlab-fh-name { flex: 1; }
+.jlab-fh-mod  { width: 58px; text-align: right; }
+
+/* File rows */
+.jlab-files {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px 0;
+}
+
+.jlab-file-row {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 6px;
+  font-size: 12px;
+  color: #222;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+.jlab-file-row:hover { background: #e8e8e8; }
+.jlab-file-row.active {
+  background: #d6eaff;
+  border-left-color: #1976d2;
+}
+
+.jlab-nb-icon { color: #f37626; font-size: 13px; }
+.jlab-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jlab-file-mod  { font-size: 11px; color: #888; white-space: nowrap; }
+
+/* ============================================================
+   MAIN  (tabs + notebook content)
+   ============================================================ */
+.jlab-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* ============================================================
+   TAB BAR
+   ============================================================ */
+.jlab-tabs {
+  height: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: flex-end;
+  background: #eeeeee;
+  border-bottom: 1px solid #e0e0e0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.jlab-tab {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  background: #e2e2e2;
+  border-right: 1px solid #e0e0e0;
+  border-top: 2px solid transparent;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.jlab-tab:hover { background: #d8d8d8; }
+.jlab-tab.active {
+  background: #ffffff;
+  border-top-color: #1976d2;
+  color: #111;
+}
+
+.jlab-tab-icon  { color: #f37626; font-size: 12px; }
+.jlab-tab-label { font-size: 12px; }
+.jlab-tab-dot   { font-size: 7px; color: #999; margin-left: 2px; }
+.jlab-tab-close {
+  font-size: 14px;
+  color: #888;
+  padding: 0 2px;
+  border-radius: 2px;
+  line-height: 1;
+}
+.jlab-tab-close:hover { background: #ddd; color: #333; }
+
+/* ============================================================
+   NOTEBOOK AREA
+   ============================================================ */
+.jlab-notebook {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+.jlab-toolbar {
+  height: 37px;
+  min-height: 37px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 6px;
+  background: #fafafa;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.jlab-tb-btn {
+  width: 28px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #444;
+  transition: background 0.1s;
+}
+.jlab-tb-btn:hover { background: #e0e0e0; }
+.jlab-run { color: #1976d2 !important; font-size: 13px !important; }
+
+.jlab-tb-sep {
+  width: 1px;
+  height: 20px;
+  background: #d0d0d0;
+  margin: 0 3px;
+}
+
+.jlab-tb-select {
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 12px;
+  color: #333;
+  cursor: pointer;
+}
+
+.jlab-tb-spacer { flex: 1; }
+
+.jlab-kernel-name {
+  font-size: 11px;
+  color: #555;
+  margin-right: 5px;
+}
+
+.jlab-kernel-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #999;
+  background: transparent;
+  margin-right: 4px;
+}
+.jlab-kernel-circle.busy {
+  background: #f37626;
+  border-color: #f37626;
+}
+
+.jlab-kernel-label {
+  font-size: 11px;
+  color: #555;
+  margin-right: 4px;
+}
+
+/* ============================================================
+   CELLS SCROLL AREA
+   ============================================================ */
+.jlab-cells {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 0 40px 0;
+}
+
+/* ============================================================
+   INDIVIDUAL CELL BLOCK
+   ============================================================ */
+.jlab-cell-block {
+  position: relative;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+/* Cell mini-toolbar — vertical column on the RIGHT of the cell */
+.jlab-cell-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 4px 4px 0 4px;
+  flex-shrink: 0;
+}
+.jlab-cell-toolbar button {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 11px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.jlab-cell-toolbar button:hover { background: #eee; border-color: #ddd; color: #222; }
+
+/* Input cell row — toolbar is a flex child on the right */
+.jlab-cell {
+  display: flex;
+  align-items: flex-start;
+  border-left: 4px solid transparent;
+  padding-right: 0;
+}
+.jlab-cell.selected { border-left-color: #1976d2; }
+
+.jlab-in-prompt {
+  width: 58px;
+  min-width: 58px;
+  padding: 6px 6px 0 8px;
+  text-align: right;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  color: #307fc1;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.jlab-in-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.jlab-textarea {
+  width: 100%;
+  min-height: 30px;
+  height: 30px;          /* JS will override this on each keystroke */
+  padding: 5px 8px;
+  resize: none;          /* no manual resize — grows automatically */
+  overflow: hidden;      /* hides scrollbar while auto-sizing */
+  outline: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  background: #fff;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #111;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.jlab-textarea:focus { border-color: #1976d2; }
+
+/* ============================================================
+   OUTPUT ROW
+   ============================================================ */
+.jlab-out-row {
+  display: flex;
+  margin-top: 2px;
+  padding-right: 12px;
+}
+
+.jlab-out-prompt {
+  width: 58px;
+  min-width: 58px;
+  padding: 6px 6px 0 8px;
+  text-align: right;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  color: #c5700a;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.jlab-out-body {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+/* Searching */
+.jlab-searching {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #777;
+  padding: 4px 0;
+}
+
+.jlab-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ddd;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Error */
+.jlab-error {
+  margin: 0;
+  padding: 6px 10px;
+  background: #fff3f3;
+  border-left: 3px solid #e53935;
+  border-radius: 2px;
+  color: #c62828;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+/* No results */
+.jlab-no-results {
+  color: #888;
+  font-size: 13px;
+  padding: 4px 0;
+}
+.jlab-no-results strong { color: #555; }
+
+/* Result card */
+.jlab-result { padding: 8px 0; }
+.jlab-result + .jlab-result { border-top: 1px solid #ebebeb; }
+
+/* Topic heading row: "# topic text" */
+.jlab-result-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.jlab-hash {
+  font-size: 16px;
+  font-weight: 700;
+  color: #aaa;          /* grey # like Jupyter markdown heading */
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.jlab-topic-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.jlab-code {
+  margin: 0;
+  padding: 10px 12px;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-left: 3px solid #1976d2;
+  border-radius: 3px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #111;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+/* ============================================================
+   STATUS BAR
+   ============================================================ */
+.jlab-status {
+  height: 22px;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 8px;
+  background: #1e1e1e;
+  border-top: none;
+  color: #c5c5c5;
+  font-size: 11px;
+  user-select: none;
+}
+
+/* ============================================================
+   ADD-PRACTICAL BUTTON (toolbar)
+   ============================================================ */
+.jlab-add-btn {
+  width: auto !important;
+  padding: 0 8px !important;
+  background: #2e7d32 !important;
+  color: #fff !important;
+  border-radius: 3px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+}
+.jlab-add-btn:hover { background: #1b5e20 !important; }
+
+/* ============================================================
+   ADD-PRACTICAL MODAL
+   ============================================================ */
+.add-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.add-modal {
+  width: 520px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.add-modal-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.add-modal-close {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+}
+.add-modal-close:hover { color: #fff; }
+
+.add-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 18px;
+}
+
+.add-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+}
+
+.add-input {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.add-input:focus { border-color: #1976d2; }
+
+.add-textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  color: #111;
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+.add-textarea:focus { border-color: #1976d2; }
+
+.add-msg {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.add-msg-ok  { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.add-msg-err { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+
+.add-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.add-btn-cancel {
+  height: 32px;
+  padding: 0 16px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #555;
+}
+.add-btn-cancel:hover { background: #f5f5f5; }
+
+.add-btn-save {
+  height: 32px;
+  padding: 0 20px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.add-btn-save:hover    { background: #1b5e20; }
+.add-btn-save:disabled { background: #999; cursor: default; }
+
+/* ============================================================
+   DB MANAGER MODAL
+   ============================================================ */
+.dbm-modal {
+  width: 860px;
+  max-width: 97vw;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.30);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* toolbar row */
+.dbm-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+}
+.dbm-add-btn {
+  height: 30px;
+  padding: 0 14px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dbm-add-btn:hover { background: #1565c0; }
+.dbm-refresh-btn {
+  height: 30px;
+  padding: 0 12px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #555;
+}
+.dbm-refresh-btn:hover { background: #f5f5f5; }
+.dbm-inline-msg { font-size: 12px; font-weight: 600; }
+.dbm-inline-msg.ok  { color: #2e7d32; }
+.dbm-inline-msg.err { color: #c62828; }
+
+/* add / edit form */
+.dbm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 2px solid #1976d2;
+  background: #f0f7ff;
+}
+.dbm-form-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1976d2;
+}
+.dbm-form-row {
+  display: flex;
+  gap: 12px;
+}
+.dbm-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* records table */
+.dbm-table-wrap {
+  flex: 1;
+  overflow-y: auto;
+}
+.dbm-empty {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+.dbm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.dbm-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f0f0f0;
+  border-bottom: 2px solid #d0d0d0;
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+.dbm-table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+.dbm-table tbody tr:hover { background: #f5f5f5; }
+.dbm-table tbody tr.dbm-editing { background: #fff8e1; }
+.dbm-table td {
+  padding: 7px 10px;
+  vertical-align: middle;
+}
+.dbm-td-center { text-align: center; }
+.dbm-code-preview {
+  font-family: "Consolas", monospace;
+  font-size: 11px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+.dbm-edit-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background 0.1s;
+}
+.dbm-edit-btn:hover { background: #e3f2fd; }
+.dbm-del-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background 0.1s;
+}
+.dbm-del-btn:hover { background: #ffebee; }
+
+
+.jlab-st { white-space: nowrap; }
+.jlab-st-bell { font-size: 12px; }
+.jlab-st-spacer { flex: 1; }
+.jlab-st-sep { color: #555; margin: 0 2px; }
+
+/* small kernel circle in status bar */
+.jlab-st-kernel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4caf50;
+  border: none;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f5f5f5; }
+::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }
+
+/* ============================================================
+   RESPONSIVE — hide panel on small screens
+   ============================================================ */
+@media (max-width: 700px) {
+  .jlab-panel { display: none; }
+  .jlab-activity { width: 32px; min-width: 32px; }
+}
+
+/* ============================================================
+   ADD-PRACTICAL BUTTON (toolbar)
+   ============================================================ */
+.jlab-add-btn {
+  width: auto !important;
+  padding: 0 8px !important;
+  background: #2e7d32 !important;
+  color: #fff !important;
+  border-radius: 3px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+}
+.jlab-add-btn:hover { background: #1b5e20 !important; }
+
+/* ============================================================
+   ADD-PRACTICAL MODAL
+   ============================================================ */
+.add-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.add-modal {
+  width: 520px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.add-modal-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.add-modal-close {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+.add-modal-close:hover { color: #fff; }
+
+.add-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 18px;
+}
+
+.add-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+}
+
+.add-input {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111;
+  outline: none;
+}
+.add-input:focus { border-color: #1976d2; }
+
+.add-textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 12px;
+  color: #111;
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+}
+.add-textarea:focus { border-color: #1976d2; }
+
+.add-msg {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.add-msg-ok  { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.add-msg-err { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+
+.add-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.add-btn-cancel {
+  height: 32px;
+  padding: 0 16px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #555;
+}
+.add-btn-cancel:hover { background: #f5f5f5; }
+
+.add-btn-save {
+  height: 32px;
+  padding: 0 20px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.add-btn-save:hover    { background: #1b5e20; }
+.add-btn-save:disabled { background: #999; cursor: default; }
+
+
+
+
+.top-menu {
+  height: 34px;
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 12px;
+
+  background: #2b2b2b;
+
+  border-bottom: 1px solid #111;
+
+  font-size: 13px;
+}
+
+.app-title {
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 9px;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  color: #f0f0f0;
+
+  letter-spacing: 0.2px;
+}
+
+.title-icon {
+  color: #f37626;
+  font-size: 16px;
+}
+
+.menu-space {
+  flex: 1;
+}
+
+/* Kernel badge in the top-right of the menu */
+.kernel-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 3px 10px;
+
+  background: #3c3c3c;
+
+  border: 1px solid #555;
+  border-radius: 12px;
+
+  font-size: 12px;
+  color: #ccc;
+}
+
+.kernel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  display: inline-block;
+}
+
+
+/* =========================================================
+   NOTEBOOK TABS
+   ========================================================= */
+
+.tabs-bar {
+  height: 34px;
+  min-height: 34px;
+
+  display: flex;
+  align-items: flex-end;
+
+  background: #eeeeee;
+
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.notebook-tab {
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 11px;
+
+  background: #e9e9e9;
+
+  border: none;
+  border-top: 2px solid transparent;
+  border-right: 1px solid #d1d1d1;
+
+  font-size: 13px;
+
+  color: #333;
+
+  cursor: pointer;
+}
+
+.notebook-tab.open {
+  background: #ffffff;
+
+  border-top-color: #f37626;
+}
+
+.orange-icon {
+  color: #f37626;
+
+  font-size: 14px;
+}
+
+.tab-dot {
+  color: #666;
+
+  font-size: 7px;
+
+  margin-left: 5px;
+}
+
+.close-tab {
+  color: #666;
+
+  font-size: 17px;
+
+  margin-left: 6px;
+}
+
+.plus-tab {
+  width: 36px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 19px;
+
+  color: #555;
+
+  cursor: pointer;
+}
+
+.plus-tab:hover {
+  background: #ddd;
+}
+
+
+/* =========================================================
+   MAIN AREA
+   ========================================================= */
+
+.main-area {
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #f8f8f8;
+
+  border-right: 1px solid #d2d2d2;
+}
+
+
+/* =========================================================
+   SIDEBAR BUTTONS
+   ========================================================= */
+
+.sidebar-header {
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 8px 10px;
+
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.new-button {
+  width: 100%;
+  height: 30px;
+
+  border: none;
+  border-radius: 4px;
+
+  background: #f37626;
+
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.15s;
+}
+
+.new-button:hover {
+  background: #d4631a;
+}
+
+
+/* =========================================================
+   FOLDER PATH
+   ========================================================= */
+
+.path {
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 0 11px;
+
+  border-bottom: 1px solid #ddd;
+
+  color: #666;
+
+  font-size: 12px;
+}
+
+.path-sep {
+  color: #aaa;
+}
+
+
+/* =========================================================
+   FILE LIST
+   ========================================================= */
+
+.files {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding-top: 2px;
+}
+
+.file {
+  width: 100%;
+
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 10px;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 12px;
+
+  color: #222;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.file:hover {
+  background: #e7e7e7;
+}
+
+.ipynb {
+  color: #ef6c00;
+
+  font-size: 14px;
+
+  width: 15px;
+
+  text-align: center;
+}
+
+.selected {
+  background: #dceeff;
+
+  border-left: 3px solid #1976d2;
+
+  padding-left: 7px;
+}
+
+.now {
+  margin-left: auto;
+
+  font-size: 11px;
+
+  color: #555;
+}
+
+
+/* =========================================================
+   NOTEBOOK
+   ========================================================= */
+
+.notebook {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar {
+  height: 42px;
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 2px;
+
+  padding: 0 9px;
+
+  background: #fafafa;
+
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.toolbar button {
+  width: 29px;
+  height: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 3px;
+
+  background: transparent;
+
+  color: #444;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background: #e5e5e5;
+}
+
+/* Run button in the toolbar */
+.run-btn {
+  padding: 0 12px !important;
+  width: auto !important;
+  background: #f37626 !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  transition: background 0.15s;
+}
+
+.run-btn:hover {
+  background: #d4631a !important;
+}
+
+.separator {
+  width: 1px;
+  height: 21px;
+
+  margin: 0 5px;
+
+  background: #d1d1d1;
+}
+
+.cell-dropdown {
+  width: 80px;
+  height: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 9px;
+
+  margin-left: 7px;
+
+  background: #ffffff;
+
+  border: 1px solid #d0d0d0;
+
+  border-radius: 3px;
+
+  font-size: 12px;
+}
+
+.toolbar-space {
+  flex: 1;
+}
+
+.notebook-mode {
+  font-size: 12px;
+
+  color: #555;
+
+  margin-right: 6px;
+}
+
+.green-dot {
+  color: #4caf50;
+
+  font-size: 10px;
+}
+
+.kernel {
+  margin-left: 4px;
+
+  font-size: 12px;
+
+  color: #444;
+}
+
+.kernel-circle {
+  width: 13px;
+  height: 13px;
+
+  margin-left: 4px;
+
+  border: 1px solid #999;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   NOTEBOOK CONTENT
+   ========================================================= */
+
+.notebook-content {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 16px 20px 40px 20px;
+}
+
+
+/* =========================================================
+   CODE CELL
+   ========================================================= */
+
+.cell-block {
+  margin-bottom: 10px;
+}
+
+.cell {
+  width: 100%;
+
+  display: flex;
+
+  margin-bottom: 5px;
+
+  min-height: 0;
+
+  border-left: 4px solid transparent;
+
+  padding-left: 4px;
+}
+
+.cell.active {
+  border-left-color: #42a5f5;
+}
+
+.cell-body {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.cell-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Base style for all per-cell action buttons */
+.action-btn {
+  height: 26px;
+  padding: 0 11px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #444;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.action-btn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+/* Run button inside cells */
+.action-btn.run-btn {
+  background: #f37626;
+  border-color: #f37626;
+  color: white;
+  font-weight: 600;
+}
+
+.action-btn.run-btn:hover {
+  background: #d4631a;
+  border-color: #d4631a;
+}
+
+/* Delete button inside cells */
+.action-btn.delete-btn {
+  color: #c62828;
+  border-color: #ffcdd2;
+}
+
+.action-btn.delete-btn:hover {
+  background: #ffebee;
+  border-color: #ef9a9a;
+}
+
+/* Keyboard shortcut hint text */
+.shortcut-hint {
+  margin-left: 4px;
+  font-size: 11px;
+  color: #aaa;
+  font-style: italic;
+}
+
+.input-prompt {
+  width: 72px;
+  min-width: 72px;
+
+  padding-top: 9px;
+
+  padding-right: 9px;
+
+  text-align: right;
+
+  font-family:
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+
+  color: #e91e63;
+}
+
+.code-cell {
+  flex: 1;
+
+  width: 100%;
+
+  height: 45px;
+  min-height: 45px;
+
+  max-height: 300px;
+
+  padding: 8px 10px;
+
+  resize: vertical;
+
+  outline: none;
+
+  border: 1px solid #d0d0d0;
+
+  border-radius: 3px;
+
+  background: #ffffff;
+
+  font-family:
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 14px;
+
+  line-height: 1.4;
+
+  color: #111;
+}
+
+.code-cell:focus {
+  border-color: #777;
+}
+
+
+/* =========================================================
+   OUTPUT
+   ========================================================= */
+
+.output {
+  width: 100%;
+
+  display: flex;
+
+  margin-bottom: 5px;
+}
+
+.output-prompt {
+  width: 72px;
+  min-width: 72px;
+
+  padding-top: 8px;
+
+  padding-right: 9px;
+
+  text-align: right;
+
+  font-family:
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 13px;
+
+  color: #e91e63;
+}
+
+.output-box {
+  flex: 1;
+  min-height: 35px;
+  padding: 10px 14px;
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #222;
+}
+
+/* Loading state */
+.output-searching {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #777;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+/* Spinner animation */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ddd;
+  border-top-color: #f37626;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error state */
+.output-error {
+  margin: 0;
+  padding: 8px 12px;
+  background: #fff3f3;
+  border-left: 3px solid #e53935;
+  border-radius: 3px;
+  color: #c62828;
+  font-size: 13px;
+  white-space: pre-wrap;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* No-results state */
+.output-empty {
+  padding: 6px 0;
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+
+.output-empty strong {
+  color: #555;
+}
+
+.output-empty code {
+  background: #eee;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+
+/* Result cards */
+.result-card {
+  padding: 12px 0;
+}
+
+.result-card + .result-card {
+  border-top: 1px solid #e8e8e8;
+}
+
+/* Result header: badge + topic on one row */
+.result-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.practical-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  background: #fff3e0;
+  border: 1px solid #f37626;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #e65100;
+  white-space: nowrap;
+}
+
+.practical-topic {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Code block inside result cards */
+.code-container {
+  margin-top: 4px;
+}
+
+.code-block {
+  margin: 0;
+  padding: 12px 14px;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  border-left: 3px solid #f37626;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #111;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   SECOND CELL
+   ========================================================= */
+
+.second {
+  margin-top: 8px;
+}
+
+
+/* =========================================================
+   STATUS BAR
+   ========================================================= */
+
+.status-bar {
+  height: 25px;
+  min-height: 25px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 10px;
+
+  background: #f4f4f4;
+
+  border-top: 1px solid #d2d2d2;
+
+  font-size: 11px;
+
+  color: #555;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.status-green {
+  color: #4caf50;
+  font-size: 8px;
+}
+
+.status-sep {
+  color: #bbb;
+}
+
+.status-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c6c6c6;
+
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .sidebar {
+    width: 210px;
+    min-width: 210px;
+  }
+
+  .notebook-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .kernel,
+  .notebook-mode {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
