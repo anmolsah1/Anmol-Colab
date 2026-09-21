@@ -1,22 +1,13 @@
-import sqlite3
 import os
+from pymongo import MongoClient
+from dotenv import load_dotenv
 
-DATABASE = os.path.join(os.path.dirname(__file__), "practicals.db")
+load_dotenv()
 
-connection = sqlite3.connect(DATABASE)
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb+srv://anmolsah064444_db_user:IyLJruoqDB1sn5I5@cluster0.egjeby1.mongodb.net/?appName=Cluster0")
 
-cursor = connection.cursor()
+client = MongoClient(MONGO_URI)
+db = client["college_practicals"]
+practicals_collection = db["practicals"]
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS practicals (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    practical_number INTEGER NOT NULL,
-    topic TEXT NOT NULL,
-    code TEXT NOT NULL
-)
-""")
-
-connection.commit()
-connection.close()
-
-print("Database created successfully!")
+print("Connected to MongoDB successfully!")
