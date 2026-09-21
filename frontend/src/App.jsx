@@ -480,7 +480,7 @@ function App() {
 
       {/* ═══ MENU BAR ════════════════════════════════════════════════════════ */}
       <div className="jlab-menu">
-        <span className="jlab-logo">&#x2B21;</span>
+        <img src="/logo.png" alt="logo" width={18}  />
         {["File", "Edit", "View", "Run", "Kernel", "Tabs", "Settings", "Help"].map(m => (
           <span key={m} className="jlab-menu-item">{m}</span>
         ))}
