@@ -418,7 +418,8 @@ function App() {
         : c),
     }));
 
-    try {
+    // Helper: attempt one search + run cycle
+    const attemptRun = async () => {
       // 1️⃣  Search practical database
       const searchRes = await fetch(`${API}/search?q=${encodeURIComponent(query)}`);
       if (!searchRes.ok) throw new Error("Search failed");
@@ -454,15 +455,54 @@ function App() {
           } : c),
         }));
       }
-    } catch {
-      setNotebooks(prev => prev.map(n => n.id !== activeNotebookId ? n : {
-        ...n, busy: false,
-        cells: n.cells.map(c => c.id === cellId
-          ? { ...c, results: [], error: "Could not reach the search server.",
-              searching: false, wasExecuted: false }
-          : c),
-      }));
+    };
+
+    // Retry loop — Render free tier can take up to 60 s to wake up
+    const MAX_WAIT_MS  = 65_000;
+    const RETRY_MS     = 5_000;
+    const started      = Date.now();
+    let   lastErr      = null;
+
+    while (Date.now() - started < MAX_WAIT_MS) {
+      try {
+        await attemptRun();
+        return; // success — stop the loop
+      } catch (err) {
+        lastErr = err;
+        const elapsed = Date.now() - started;
+        if (elapsed + RETRY_MS >= MAX_WAIT_MS) break; // don't bother waiting if we'd exceed limit
+
+        // Show "waking up" status and wait before retrying
+        const secsLeft = Math.ceil((MAX_WAIT_MS - elapsed) / 1000);
+        setNotebooks(prev => prev.map(n => n.id !== activeNotebookId ? n : {
+          ...n,
+          cells: n.cells.map(c => c.id === cellId
+            ? { ...c, searching: true, error: null,
+                // Repurpose error field temporarily to show wake-up message
+              }
+            : c),
+        }));
+        // Update the cell error to show a friendly wake-up countdown
+        patchCell(activeNotebookId, cellId, {
+          searching: true,
+          error: `⏳ Server is waking up… retrying (${secsLeft}s remaining)`,
+        });
+
+        await new Promise(r => setTimeout(r, RETRY_MS));
+
+        // Clear the temporary message before next attempt
+        patchCell(activeNotebookId, cellId, { error: null, searching: true });
+      }
     }
+
+    // All retries exhausted — show final error
+    setNotebooks(prev => prev.map(n => n.id !== activeNotebookId ? n : {
+      ...n, busy: false,
+      cells: n.cells.map(c => c.id === cellId
+        ? { ...c, results: [], error: "❌ Could not reach the search server. Please check your internet connection or try again in a moment.",
+            searching: false, wasExecuted: false }
+        : c),
+    }));
   }
 
   function runAllCells() {

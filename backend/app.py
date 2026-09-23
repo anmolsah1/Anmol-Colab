@@ -54,6 +54,15 @@ def home():
     return "College Practical Search Engine is running!"
 
 
+# ── HEALTH / KEEP-ALIVE ───────────────────────────────────────────────────────
+# Render free tier spins down after 15 min of inactivity.
+# Point UptimeRobot (or any cron service) at this URL every 5 minutes to keep
+# the server awake so other devices don't see "Could not reach the search server".
+@app.route("/ping")
+def ping():
+    return "pong", 200
+
+
 # ── Helper: serialize a MongoDB document ──────────────────────────────────────
 def serialize(doc):
     return {
