@@ -131,8 +131,14 @@ function DBModal({ onClose }) {
 
   async function loadAll() {
     setLoading(true);
-    try { setRecords(await (await fetch(`${API}/all`)).json()); }
-    catch { setMsg({ ok: false, text: "Cannot reach Flask server." }); }
+    try {
+      const res = await fetch(`${API}/all`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Database request failed.");
+      setRecords(data);
+    } catch (error) {
+      setMsg({ ok: false, text: error.message || "Cannot reach database server." });
+    }
     finally { setLoading(false); }
   }
 
@@ -142,8 +148,15 @@ function DBModal({ onClose }) {
   async function handleDelete(id, name) {
     if (!window.confirm(`Delete "${name}"?`)) return;
     setBusyDB(true);
-    try { await fetch(`${API}/delete/${id}`, { method: "DELETE" }); await loadAll(); setMsg({ ok: true, text: "Deleted." }); }
-    catch { setMsg({ ok: false, text: "Delete failed." }); }
+    try {
+      const res = await fetch(`${API}/delete/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Delete failed.");
+      await loadAll();
+      setMsg({ ok: true, text: "Deleted from MongoDB." });
+    } catch (error) {
+      setMsg({ ok: false, text: error.message || "Delete failed." });
+    }
     finally { setBusyDB(false); }
   }
 
