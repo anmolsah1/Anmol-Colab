@@ -7,6 +7,7 @@ import re
 import sys
 import subprocess
 import tempfile
+from urllib.parse import quote_plus, unquote
 from dotenv import load_dotenv
 from werkzeug.exceptions import HTTPException
 
@@ -15,10 +16,27 @@ load_dotenv()
 app = Flask(__name__)
 
 # ── MongoDB Setup ─────────────────────────────────────────────────────────────
-MONGO_URI = os.environ.get(
+def normalize_mongo_uri(uri):
+    scheme = "mongodb+srv://"
+    if not uri.startswith(scheme) or "@" not in uri:
+        return uri
+
+    user_info, host = uri[len(scheme):].rsplit("@", 1)
+    if ":" not in user_info:
+        return uri
+
+    username, password = user_info.split(":", 1)
+    encoded_user_info = ":".join((
+        quote_plus(unquote(username)),
+        quote_plus(unquote(password)),
+    ))
+    return f"{scheme}{encoded_user_info}@{host}"
+
+
+MONGO_URI = normalize_mongo_uri(os.environ.get(
     "MONGO_URI",
     "mongodb+srv://anmolsah064444_db_user:IyLJruoqDB1sn5I5@cluster0.egjeby1.mongodb.net/?appName=Cluster0"
-)
+))
 
 client = MongoClient(
     MONGO_URI,
