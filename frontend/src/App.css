@@ -161,12 +161,12 @@ button {
 /* Blue + New button in panel header */
 .jlab-panel-new {
   height: 24px;
-  padding: 0 10px;
+  padding:0 20px;
   background: #1976d2;
   color: #fff;
   border: none;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 23px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;

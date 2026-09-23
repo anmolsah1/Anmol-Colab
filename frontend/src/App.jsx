@@ -502,7 +502,7 @@ function App() {
         {/* ═══ LEFT PANEL — file browser ═══════════════════════════════════ */}
         <div className="jlab-panel">
           <div className="jlab-panel-path">
-            <button className="jlab-panel-new" onClick={createNotebook}>+ New</button>
+            <button className="jlab-panel-new" onClick={createNotebook}>+</button>
             <div className="jlab-panel-btns">
               <button title="Upload">&#8593;</button>
               <button title="Refresh">&#8635;</button>
@@ -679,7 +679,7 @@ function App() {
                               className={"jlab-textarea" + (isMd ? " jlab-md-textarea" : "")}
                               value={cell.input}
                               spellCheck={isMd}
-                              placeholder={isMd ? "Write **markdown** here… (Shift+Enter to render)" : "Search practicals… (Shift+Enter to run)"}
+                              // placeholder={isMd ? "Write **markdown** here… (Shift+Enter to render)" : "Search practicals… (Shift+Enter to run)"}
                               onChange={e => {
                                 setNotebooks(prev => prev.map(nb => nb.id !== activeNotebookId ? nb : {
                                   ...nb, cells: nb.cells.map(c => c.id === cell.id ? { ...c, input: e.target.value } : c),
