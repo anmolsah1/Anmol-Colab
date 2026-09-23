@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 // ── MongoDB ───────────────────────────────────────────────────────────────────
 const MONGO_URI = process.env.MONGO_URI ||
-  "mongodb+srv://anmolsah064444_db_user:Anmol@2005@cluster0.egjeby1.mongodb.net/?appName=Cluster0";
+  "mongodb+srv://anmolsah064444_db_user:anmol2005@cluster0.egjeby1.mongodb.net/?appName=Cluster0";
 
 let practicals; // collection reference
 
