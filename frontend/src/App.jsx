@@ -422,7 +422,16 @@ function App() {
     const attemptRun = async () => {
       // 1️⃣  Search practical database
       const searchRes = await fetch(`${API}/search?q=${encodeURIComponent(query)}`);
-      if (!searchRes.ok) throw new Error("Search failed");
+      if (!searchRes.ok) {
+        let message = `Search failed (${searchRes.status})`;
+        try {
+          const errorData = await searchRes.json();
+          if (errorData.error) message = errorData.error;
+        } catch {
+          // Keep the status-based message when the server did not return JSON.
+        }
+        throw new Error(message);
+      }
       const results = await searchRes.json();
 
       if (results.length > 0) {
@@ -499,7 +508,7 @@ function App() {
     setNotebooks(prev => prev.map(n => n.id !== activeNotebookId ? n : {
       ...n, busy: false,
       cells: n.cells.map(c => c.id === cellId
-        ? { ...c, results: [], error: "❌ Could not reach the search server. Please check your internet connection or try again in a moment.",
+        ? { ...c, results: [], error: `❌ ${lastErr?.message || "Could not reach the search server. Please check your internet connection or try again in a moment."}`,
             searching: false, wasExecuted: false }
         : c),
     }));

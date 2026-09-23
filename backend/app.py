@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
+from pymongo.errors import PyMongoError
 from bson import ObjectId
 import os
 import re
@@ -7,6 +8,7 @@ import sys
 import subprocess
 import tempfile
 from dotenv import load_dotenv
+from werkzeug.exceptions import HTTPException
 
 load_dotenv()
 
@@ -18,7 +20,12 @@ MONGO_URI = os.environ.get(
     "mongodb+srv://anmolsah064444_db_user:IyLJruoqDB1sn5I5@cluster0.egjeby1.mongodb.net/?appName=Cluster0"
 )
 
-client = MongoClient(MONGO_URI)
+client = MongoClient(
+    MONGO_URI,
+    serverSelectionTimeoutMS=5000,
+    connectTimeoutMS=5000,
+    socketTimeoutMS=10000,
+)
 db = client["college_practicals"]
 practicals = db["practicals"]
 
@@ -46,6 +53,17 @@ def allow_frontend(response):
 @app.route("/<path:p>", methods=["OPTIONS"])
 def options_handler(p=""):
     return "", 204
+
+
+@app.errorhandler(Exception)
+def handle_unexpected_error(error):
+    if isinstance(error, PyMongoError):
+        app.logger.error("MongoDB request failed: %s", error)
+        return jsonify({"error": "Database unavailable"}), 503
+    if isinstance(error, HTTPException):
+        return error
+    app.logger.exception("Unhandled request error")
+    return jsonify({"error": "Internal server error"}), 500
 
 
 # ── HOME ──────────────────────────────────────────────────────────────────────
