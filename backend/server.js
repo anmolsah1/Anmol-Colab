@@ -9,14 +9,11 @@ const path       = require("path");
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
-// ── MongoDB ───────────────────────────────────────────────────────────────────
-const MONGO_URI = process.env.MONGO_URI ||
-  "mongodb+srv://anmolsah064444_db_user:Anmol@2005@cluster0.egjeby1.mongodb.net/?appName=Cluster0";
 
 let practicals; // collection reference
 
 async function connectDB() {
-  const client = new MongoClient(MONGO_URI);
+  const client = new MongoClient(process.env.MONGO_URI);
   await client.connect();
   const db = client.db("college_practicals");
   practicals = db.collection("practicals");
