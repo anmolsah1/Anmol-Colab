@@ -4,7 +4,9 @@ import "./App.css";
 /* ─────────────────────────────────────────────────────────────────────────────
    API
 ───────────────────────────────────────────────────────────────────────────── */
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+const API = import.meta.env.PROD
+  ? "https://anmol-colab.onrender.com"
+  : (import.meta.env.VITE_API_URL || "http://127.0.0.1:5000");
 
 /* ─────────────────────────────────────────────────────────────────────────────
    SIMPLE MARKDOWN RENDERER
