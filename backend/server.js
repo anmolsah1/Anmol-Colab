@@ -22,7 +22,6 @@ async function connectDB() {
   practicals = db.collection("practicals");
   console.log("✅ Connected to MongoDB Atlas");
 }
-
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
 
